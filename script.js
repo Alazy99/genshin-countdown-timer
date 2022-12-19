@@ -4,30 +4,33 @@ const dayTimer = document.querySelector('.day-timer');
 const labelTimer = document.querySelector('.timer');
 const mainTimer = document.querySelector('.maintenance-timer');
 
+const hourTime = function (difference) {
+	const hours = String(
+		Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+	).padStart(2, 0);
+	const minutes = String(
+		Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+	).padStart(2, 0);
+	const seconds = String(
+		Math.floor((difference % (1000 * 60)) / 1000)
+	).padStart(2, 0);
+	return [hours, minutes, seconds];
+};
+
 const maintenaceTimer = function () {
 	let timer;
 	const timerMain = function () {
-		// const date_1 = new Date('Jan 17, 2023 17:00:00').getTime();
-		// const date_2 = new Date('Jan 17, 2023 22:00:00').getTime();
 		const date_1 = new Date().getTime();
-		const date_2 = new Date('Dec 14, 2022 17:46:00').getTime();
+		const date_2 = new Date('Jan 17, 2023 22:00:00').getTime();
 
 		const differenceTime = date_2 - date_1;
-		const hours = String(
-			Math.floor((differenceTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-		).padStart(2, 0);
-		const minutes = String(
-			Math.floor((differenceTime % (1000 * 60 * 60)) / (1000 * 60))
-		).padStart(2, 0);
-		const seconds = String(
-			Math.floor((differenceTime % (1000 * 60)) / 1000)
-		).padStart(2, 0);
+		const [hours, minutes, seconds] = hourTime(differenceTime);
 
-		mainTimer.textContent = `${hours}:${minutes}:${seconds}`;
+		mainTimer.textContent = `Maintenance Timer: ${hours}:${minutes}:${seconds}`;
 
 		if (differenceTime < 0) {
 			clearInterval(timer);
-			mainTimer.textContent = `00:00:00`;
+			mainTimer.textContent = `Maintenance ended: 00:00:00`;
 			console.log('NOW ENDED');
 		}
 	};
@@ -41,7 +44,6 @@ const countDownTimer = function () {
 	let timer;
 	const tick = function () {
 		const countDownDate = new Date('Jan 17, 2023 17:00:00').getTime();
-		// const countDownDate = new Date('Dec 14, 2022 17:45:00').getTime();
 
 		// Get today's date and time
 		const now = new Date().getTime();
@@ -49,24 +51,17 @@ const countDownTimer = function () {
 		// Find the distance between now and the count down date
 		const distance = countDownDate - now;
 
-		// Time calculations for days, hours, minutes and seconds
 		const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		const hours = Math.floor(
-			(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-		);
-		const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		const [hours, minutes, seconds] = hourTime(distance);
 
-		labelTimer.textContent =
-			days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+		labelTimer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 		dayTimer.textContent = `${days} days till Genshin Impact goes into maintenace`;
+		console.log();
 
 		// If the count down is over, write some text
 		if (distance < 0) {
 			clearInterval(timer);
-			// clearTimeout(tick);
-			console.log('ENDED');
-			labelTimer.textContent = 0 + 'd ' + 0 + 'h ' + 0 + 'm ' + 0 + 's ';
+			labelTimer.textContent = `0d 0h 0m 0s`;
 			dayTimer.textContent = `0 days till Genshin Impact goes into maintenace`;
 			maintenaceTimer();
 		}
