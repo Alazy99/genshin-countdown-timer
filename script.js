@@ -56,7 +56,6 @@ const countDownTimer = function () {
 
 		labelTimer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 		dayTimer.textContent = `${days} days till Genshin Impact goes into maintenace`;
-		console.log();
 
 		// If the count down is over, write some text
 		if (distance < 0) {
