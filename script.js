@@ -31,7 +31,6 @@ const maintenaceTimer = function () {
 		if (differenceTime < 0) {
 			clearInterval(timer);
 			mainTimer.textContent = `Maintenance ended: 00:00:00`;
-			console.log('NOW ENDED');
 		}
 	};
 	timerMain();
@@ -45,10 +44,8 @@ const countDownTimer = function () {
 	const tick = function () {
 		const countDownDate = new Date('Jan 17, 2023 17:00:00').getTime();
 
-		// Get today's date and time
 		const now = new Date().getTime();
 
-		// Find the distance between now and the count down date
 		const distance = countDownDate - now;
 
 		const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -57,7 +54,6 @@ const countDownTimer = function () {
 		labelTimer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 		dayTimer.textContent = `${days} days till Genshin Impact goes into maintenace`;
 
-		// If the count down is over, write some text
 		if (distance < 0) {
 			clearInterval(timer);
 			labelTimer.textContent = `0d 0h 0m 0s`;
